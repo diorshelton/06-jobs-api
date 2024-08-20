@@ -17,7 +17,6 @@ const auth = async (req, res, next) => {
   } catch (error) {
     throw new UnauthenticatedError('Authentication invalid')
   }
-3
 }
 
 module.exports = auth
