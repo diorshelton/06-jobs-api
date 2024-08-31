@@ -40,6 +40,8 @@ app.use(xss());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/posts", authenticateUser, postsRouter);
 
+app.use(express.static("public"));
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
