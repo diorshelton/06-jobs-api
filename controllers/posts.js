@@ -8,7 +8,6 @@ const getAllPosts = async (req, res) => {
 };
 const getPost = async (req, res) => {
 	try {
-		console.log(req.user);
 		const {
 			user: { userId },
 			params: { id: postId },
