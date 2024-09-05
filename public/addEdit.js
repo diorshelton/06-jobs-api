@@ -71,7 +71,7 @@ export const handleAddEdit = () => {
 };
 
 export const showAddEdit = async (postId) => {
-	if (!postId) {
+	if (!postId) { 
 		title.value = "";
 		postContent.value = "";
 		visible.value = true;
@@ -114,4 +114,25 @@ export const showAddEdit = async (postId) => {
 
 		enableInput(true);
 	}
+}
+
+export const deletePost = async (postId) => {
+	enableInput(false);
+	try {
+		const response = await fetch(`/api/v1/posts/${postId}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		const data = await response.json()
+		message.textContent = data.msg
+		showPosts()
+	} catch (err) {
+		console.log(err);
+		message.textContent = "A communications error has occurred.";
+		showPosts();
+	}
+	enableInput(true);
 };

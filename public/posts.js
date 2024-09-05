@@ -7,7 +7,7 @@ import {
 	enableInput,
 } from "./index.js";
 import { showLoginRegister } from "./loginRegister.js";
-import { showAddEdit } from "./addEdit.js";
+import { deletePost, showAddEdit } from "./addEdit.js";
 
 let postsDiv = null;
 let postsTable = null;
@@ -21,7 +21,6 @@ export const handlePosts = () => {
 	postsTableHeader = document.getElementById("posts-table-header");
 
 	postsDiv.addEventListener("click", (e) => {
-
 		if (inputEnabled && e.target.nodeName === "BUTTON") {
 			if (e.target === addPost) {
 				showAddEdit(null);
@@ -30,6 +29,9 @@ export const handlePosts = () => {
 			} else if (e.target.classList.contains("editButton")) {
         message.textContent = "";
         showAddEdit(e.target.dataset.id);
+      } else if (e.target.classList.contains("deleteButton")) {
+        deletePost(e.target.dataset.id);
+        message.textContent = "";
       }
 		} else if (e.target === logoff) {
 			setToken(null);
