@@ -16,10 +16,9 @@ const PostSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, "Please provide a user"]
   },
-  visibility:{
-    type: String,
-    enum: ['public', 'private'],
-    default:'public'
+  visible:{
+    type: Boolean,
+    default: true,
   }
 }, {timestamps:true})
 

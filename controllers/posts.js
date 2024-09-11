@@ -8,7 +8,6 @@ const getAllPosts = async (req, res) => {
 };
 const getPost = async (req, res) => {
 	try {
-		console.log(req.user);
 		const {
 			user: { userId },
 			params: { id: postId },
@@ -37,34 +36,32 @@ const updatePost = async (req, res) => {
 		params: { id: postId },
 	} = req;
 
-  if ( title === "" || message=== "") {
-    throw new BadRequestError('Title or Message fiels cannot be empty')
-  }
+	if (title === "" || message === "") {
+		throw new BadRequestError("Title or Message fiels cannot be empty");
+	}
 
-  const post = await Post.findByIdAndUpdate(
-    {_id: postId, createdBy: userId},
-    req.body,
-    {new: true, runValidators:true}
-  )
+	const post = await Post.findByIdAndUpdate(
+		{ _id: postId, createdBy: userId },
+		req.body,
+		{ new: true, runValidators: true }
+	);
 
-  if (!post) {
-    throw new NotFoundError(`No post with id ${postId}`)
-  }
-  res.status(StatusCodes.OK).json({post})
+	if (!post) {
+		throw new NotFoundError(`No post with id ${postId}`);
+	}
+	res.status(StatusCodes.OK).json({ post });
 };
 
 const deletePost = async (req, res) => {
-  const {
+	const {
 		user: { userId },
 		params: { id: postId },
 	} = req;
-  const post = await Post.findByIdAndRemove({_id:postId,
-    createdBy:userId
-  })
-  if (!post) {
-    throw new NotFoundError(`No post with id ${postId}`)
-  }
-  res.status(StatusCodes.OK).send()
+	const post = await Post.findByIdAndDelete({ _id: postId, createdBy: userId });
+	if (!post) {
+		throw new NotFoundError(`No post with id ${postId}`);
+	}
+	res.status(StatusCodes.OK).json({ msg: "The entry was deleted" });
 };
 
 module.exports = { getAllPosts, getPost, createPost, updatePost, deletePost };
